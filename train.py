@@ -77,10 +77,21 @@ class Solver(object):
                         feed_dict=feed_dict)
                     train_timer.toc()
 
+                    # log_str = '''{} Epoch: {}, Step: {}, Learning rate: {},'''
+                    # ''' Loss: {:5.3f}\nSpeed: {:.3f}s/iter,'''
+                    # '''' Load: {:.3f}s/iter, Remain: {}'''.format(
+                    #     datetime.datetime.now().strftime('%m-%d %H:%M:%S'),
+                    #     self.data.epoch,
+                    #     int(step),
+                    #     round(self.learning_rate.eval(session=self.sess), 6),
+                    #     loss,
+                    #     float(train_timer.average_time),
+                    #     float(load_timer.average_time),
+                    #     train_timer.remain(step, self.max_iter))
                     log_str = '''{} Epoch: {}, Step: {}, Learning rate: {},'''
                     ''' Loss: {:5.3f}\nSpeed: {:.3f}s/iter,'''
                     '''' Load: {:.3f}s/iter, Remain: {}'''.format(
-                        datetime.datetime.now().strftime('%m-%d %H:%M:%S'),
+                        datetime.time(),
                         self.data.epoch,
                         int(step),
                         round(self.learning_rate.eval(session=self.sess), 6),
