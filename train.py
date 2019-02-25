@@ -85,8 +85,8 @@ class Solver(object):
                         int(step),
                         round(self.learning_rate.eval(session=self.sess), 6),
                         loss,
-                        train_timer.average_time,
-                        load_timer.average_time,
+                        float(train_timer.average_time),
+                        float(load_timer.average_time),
                         train_timer.remain(step, self.max_iter))
                     print(log_str)
 
