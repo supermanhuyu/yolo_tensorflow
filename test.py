@@ -212,7 +212,7 @@ def main():
     parser.add_argument('--gpu', default='', type=str)
     args = parser.parse_args()
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+    # os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
     yolo = YOLONet(False)
     weight_file = os.path.join(args.data_dir, args.weight_dir, args.weights)
