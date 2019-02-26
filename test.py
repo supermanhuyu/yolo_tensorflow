@@ -164,11 +164,6 @@ class Detector(object):
         print("fourcc: ", fourcc)
         print("height: ", height)
         print("weidth: ", weidth)
-        # print("cv2.VideoWriter_fourcc(*'X264') : ", cv2.VideoWriter_fourcc(*'XVID'))
-        # print("cv2.VideoWriter_fourcc(*'XVID') : ", cv2.VideoWriter_fourcc(*'X264'))
-        # fps = 24
-        # fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-        # videowriter = cv2.VideoWriter('test/test.avi', cv2.VideoWriter_fourcc(*'H264 '), 24, (640, 368))
         videowriter = cv2.VideoWriter('test/test.avi', fourcc, fps, (weidth, height))
         ret, frame = cap.read()
 
@@ -199,9 +194,9 @@ class Detector(object):
             detect_timer.average_time))
 
         self.draw_result(image, result)
-        cv2.imshow('Image', image)
-        cv2.waitKey(wait)
-        # cv2.imwrite(imname.replace(".jpg", "_result.jpg"), image)
+        # cv2.imshow('Image', image)
+        # cv2.waitKey(wait)
+        cv2.imwrite(imname.replace(".jpg", "_result.jpg"), image)
 
 
 def main():
@@ -218,15 +213,15 @@ def main():
     weight_file = os.path.join(args.data_dir, args.weight_dir, args.weights)
     detector = Detector(yolo, weight_file)
 
-    # detect from camera
-    cap = cv2.VideoCapture("test/1.mp4")
-    # cap = cv2.VideoCapture(-1)
-    detector.camera_detector(cap, wait=1)
+    # # detect from camera
+    # cap = cv2.VideoCapture("test/1.mp4")
+    # # cap = cv2.VideoCapture(-1)
+    # detector.camera_detector(cap, wait=1)
 
     # detect from image file
     # imname = 'data/test/coco.jpg'
-    # imname = 'test/person.jpg'
-    # detector.image_detector(imname)
+    imname = 'test/person.jpg'
+    detector.image_detector(imname)
 
 
 if __name__ == '__main__':
