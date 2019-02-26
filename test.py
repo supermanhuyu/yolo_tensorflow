@@ -180,8 +180,9 @@ class Detector(object):
             detect_timer.average_time))
 
         self.draw_result(image, result)
-        cv2.imshow('Image', image)
-        cv2.waitKey(wait)
+        # cv2.imshow('Image', image)
+        # cv2.waitKey(wait)
+        cv2.imwrite(imname.replace(".jpg", "_result.jpg"), image)
 
 
 def main():
@@ -203,7 +204,7 @@ def main():
     # detector.camera_detector(cap)
 
     # detect from image file
-    imname = 'test/person.jpg'
+    imname = 'data/coco.jpg'
     detector.image_detector(imname)
 
 
