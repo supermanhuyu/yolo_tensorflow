@@ -157,7 +157,7 @@ class Detector(object):
 
         fps = int(cap.get(cv2.CAP_PROP_FPS))
         # fourcc = int(cap.get(cv2.CAP_PROP_FOURCC))
-        fourcc = cv2.VideoWriter_fourcc(*'X264')
+        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         weidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         print("fps: ", fps)
@@ -169,7 +169,7 @@ class Detector(object):
         # fps = 24
         # fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         # videowriter = cv2.VideoWriter('test/test.avi', cv2.VideoWriter_fourcc(*'H264 '), 24, (640, 368))
-        videowriter = cv2.VideoWriter('test.mp4', fourcc, fps, (weidth, height))
+        videowriter = cv2.VideoWriter('test/test.avi', fourcc, fps, (weidth, height))
         ret, frame = cap.read()
 
         while frame is not None:
