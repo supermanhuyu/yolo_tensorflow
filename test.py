@@ -155,19 +155,36 @@ class Detector(object):
         detect_timer = Timer()
         ret, _ = cap.read()
 
-        while ret:
-            ret, frame = cap.read()
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
+        fourcc = int(cap.get(cv2.CAP_PROP_FOURCC))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        weidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        print("fps: ", fps)
+        print("fourcc: ", fourcc)
+        print("height: ", height)
+        print("weidth: ", weidth)
+        # print("cv2.VideoWriter_fourcc(*'U263') : ", cv2.VideoWriter_fourcc(*'MPEG'))
+        # fps = 24
+        # fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        # videowriter = cv2.VideoWriter('test/test.avi', cv2.VideoWriter_fourcc(*'H264 '), 24, (640, 368))
+        videowriter = cv2.VideoWriter('test.mp4', fourcc, fps, (weidth, height))
+        ret, frame = cap.read()
+
+        while frame is not None:
             detect_timer.tic()
             result = self.detect(frame)
             detect_timer.toc()
-            print('Average detecting time: {:.3f}s'.format(
-                detect_timer.average_time))
+            print('Average detecting time: {:.3f}s'.format(detect_timer.average_time))
 
             self.draw_result(frame, result)
-            cv2.imshow('Camera', frame)
-            cv2.waitKey(wait)
+            # cv2.imshow('Camera', frame)
+            # if cv2.waitKey(wait) & 0xFF == ord('q'):
+            #     break
+            # cv2.waitKey(wait)
 
+            videowriter.write(frame)
             ret, frame = cap.read()
+        videowriter.release()
 
     def image_detector(self, imname, wait=0):
         detect_timer = Timer()
@@ -180,9 +197,9 @@ class Detector(object):
             detect_timer.average_time))
 
         self.draw_result(image, result)
-        # cv2.imshow('Image', image)
-        # cv2.waitKey(wait)
-        cv2.imwrite(imname.replace(".jpg", "_result.jpg"), image)
+        cv2.imshow('Image', image)
+        cv2.waitKey(wait)
+        # cv2.imwrite(imname.replace(".jpg", "_result.jpg"), image)
 
 
 def main():
@@ -200,12 +217,14 @@ def main():
     detector = Detector(yolo, weight_file)
 
     # detect from camera
+    cap = cv2.VideoCapture("test/1.mp4")
     # cap = cv2.VideoCapture(-1)
-    # detector.camera_detector(cap)
+    detector.camera_detector(cap, wait=1)
 
     # detect from image file
-    imname = 'data/coco.jpg'
-    detector.image_detector(imname)
+    # imname = 'data/test/coco.jpg'
+    # imname = 'test/person.jpg'
+    # detector.image_detector(imname)
 
 
 if __name__ == '__main__':
